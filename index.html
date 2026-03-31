@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>경일신경과 내과 - 치매 자가진단</title>
+    <style>
+        :root { --primary: #0055a5; --secondary: #eef6ff; --danger: #d32f2f; }
+        body { font-family: 'Pretendard', -apple-system, sans-serif; background: #f0f2f5; margin: 0; padding: 20px; color: #333; }
+        .container { max-width: 500px; margin: 0 auto; background: white; border-radius: 20px; overflow: hidden; box-shadow: 0 10px 25px rgba(0,0,0,0.1); }
+        .header { background: var(--primary); color: white; padding: 30px 20px; text-align: center; }
+        .header h1 { margin: 0; font-size: 1.5rem; }
+        .header p { margin: 10px 0 0; opacity: 0.9; font-size: 0.9rem; }
+        .content { padding: 20px; }
+        .q-group { margin-bottom: 15px; border-bottom: 1px solid #eee; padding-bottom: 15px; display: flex; align-items: flex-start; }
+        .q-group input { width: 22px; height: 22px; margin-right: 15px; flex-shrink: 0; cursor: pointer; }
+        .q-text { font-size: 1rem; line-height: 1.4; }
+        .btn-calc { background: var(--primary); color: white; border: none; width: 100%; padding: 18px; border-radius: 10px; font-size: 1.1rem; font-weight: bold; cursor: pointer; margin-top: 10px; transition: 0.3s; }
+        .btn-calc:hover { background: #003d7a; }
+        #result-box { display: none; margin-top: 20px; padding: 20px; border-radius: 12px; text-align: center; }
+        .warning { background: #fff1f0; border: 1px solid #ffa39e; color: var(--danger); }
+        .safe { background: #f6ffed; border: 1px solid #b7eb8f; color: #389e0d; }
+        .call-link { display: block; margin-top: 15px; background: var(--danger); color: white; text-decoration: none; padding: 12px; border-radius: 8px; font-weight: bold; }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <div class="header">
+        <h1>경일신경과 내과</h1>
+        <p>기억력 저하 및 치매 선별 자가진단</p>
+    </div>
+    
+    <div class="content">
+        <div id="quiz-list">
+            <div class="q-group"><input type="checkbox" class="q-chk"><span class="q-text">기억력이 이전보다 떨어졌다고 생각하십니까?</span></div>
+            <div class="q-group"><input type="checkbox" class="q-chk"><span class="q-text">기억력이 주변 사람들에 비해 나쁘다고 생각하십니까?</span></div>
+            <div class="q-group"><input type="checkbox" class="q-chk"><span class="q-text">며칠 전에 나눈 대화 내용을 잊으십니까?</span></div>
+            <div class="q-group"><input type="checkbox" class="q-chk"><span class="q-text">최근에 일어난 일을 기억하는 것이 어렵습니까?</span></div>
+            <div class="q-group"><input type="checkbox" class="q-chk"><span class="q-text">약속 시간을 자주 잊으십니까?</span></div>
+            <div class="q-group"><input type="checkbox" class="q-chk"><span class="q-text">물건을 둔 곳을 몰라 한참 찾으십니까?</span></div>
+            <div class="q-group"><input type="checkbox" class="q-chk"><span class="q-text">길을 잃거나 방향 감각이 떨어졌다고 느끼십니까?</span></div>
+            <div class="q-group"><input type="checkbox" class="q-chk"><span class="q-text">계산 실수나 돈 관리가 전보다 서툴러졌습니까?</span></div>
+            <div class="q-group"><input type="checkbox" class="q-chk"><span class="q-text">가전제품 사용 등 익숙한 일을 하기 어렵습니까?</span></div>
+        </div>
+
+        <button class="btn-calc" onclick="showResult()">결과 확인하기</button>
+
+        <div id="result-box">
+            <h3 id="score-text"></h3>
+            <p id="desc-text"></p>
+            <a href="tel:0536522525" id="call-btn" class="call-link">📞 경일신경과 전화 상담하기</a>
+        </div>
+    </div>
+</div>
+
+<script>
+    function showResult() {
+        const checks = document.querySelectorAll('.q-chk:checked').length;
+        const resultBox = document.getElementById('result-box');
+        const scoreText = document.getElementById('score-text');
+        const descText = document.getElementById('desc-text');
+        const callBtn = document.getElementById('call-btn');
+
+        resultBox.style.display = 'block';
+        scoreText.innerText = `총점: ${checks}점 / 9점`;
+
+        if(checks >= 3) {
+            resultBox.className = 'warning';
+            descText.innerHTML = "중등도 이상의 기억력 감퇴가 의심됩니다.<br>정밀 검사를 위해 내원을 권장합니다.";
+            callBtn.style.display = 'block';
+        } else {
+            resultBox.className = 'safe';
+            descText.innerHTML = "정상 범위 내의 점수이나, 주관적인 불편감이 있다면 전문의 상담을 받아보시는 것이 좋습니다.";
+            callBtn.style.display = 'none';
+        }
+        
+        // 결과 확인 시 아래로 스크롤
+        window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' });
+    }
+</script>
+
+</body>
+</html>
